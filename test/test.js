@@ -131,3 +131,43 @@ describe('EmojiCharString Class substr method', () => {
     assert.equal(emojiStr.substr(0, 'hello'), '')
   })
 })
+
+// slice
+describe.only('EmojiCharString Class slice method', () => {
+  let str = '👨‍👨‍👦 our family 我们一家 ❤️'
+  let emojiStr = new EmojiCharString(str)
+  let emojiStrLen = emojiStr.length
+
+  it('If begin is omitted, it will use default value 0.', () => {
+    assert.equal(emojiStr.slice(), str)
+  })
+
+  it('If begin is positive and is greater than or equal to the length of the string, slice() returns an empty string.', () => {
+    assert.equal(emojiStr.slice(emojiStrLen, 4), '')
+    assert.equal(emojiStr.slice(emojiStrLen + 20, 4), '')
+  })
+
+  it('If begin is negative, slice() uses it as a character index from the end of the string.', () => {
+    assert.equal(emojiStr.slice(-4), '一家 ❤️')
+    assert.equal(emojiStr.slice(-emojiStrLen, 4), '👨‍👨‍👦 ou')
+  })
+
+  it('If begin is negative and abs(start) is larger than the length of the string, slice() uses 0 as the start index.', () => {
+    assert.equal(emojiStr.slice(-200, 4), '👨‍👨‍👦 ou')
+    assert.equal(emojiStr.slice(-300, 6), '👨‍👨‍👦 our ')
+  })
+
+  it('If length is omitted, slice() extracts characters to the end of the string.', () => {
+    assert.equal(emojiStr.slice(0), str)
+    assert.equal(emojiStr.slice(2), 'our family 我们一家 ❤️')
+    assert.equal(emojiStr.slice(emojiStrLen), '')
+  })
+
+  it('If length is 0 or negative or not a number, slice() returns an empty string.', () => {
+    assert.equal(emojiStr.slice(0, 0), '')
+    assert.equal(emojiStr.slice(4, 0), '')
+    assert.equal(emojiStr.slice(5, -20), '')
+    assert.equal(emojiStr.slice(100, -20), '')
+    assert.equal(emojiStr.slice(0, 'hello'), '')
+  })
+})

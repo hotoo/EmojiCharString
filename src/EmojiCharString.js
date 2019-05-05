@@ -73,6 +73,10 @@ class EmojiCharString {
 
     return this._match.slice(indexStart, indexEnd).join('')
   }
+
+  slice (begin = 0, end) {
+    return this._match.slice(begin, end).join('')
+  }
 }
 
 export default EmojiCharString
