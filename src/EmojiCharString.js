@@ -1,10 +1,11 @@
 
 const astralRange = /\ud83c[\udffb-\udfff](?=\ud83c[\udffb-\udfff])|(?:[^\ud800-\udfff][\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0]?|[\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\ud800-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0]|\ud83c[\udffb-\udfff])?(?:\u200d(?:[^\ud800-\udfff]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0]|\ud83c[\udffb-\udfff])?)*/g
-class EmojiCharString {
+class EmojiCharString extends String {
   constructor (string) {
     if (typeof string !== 'string') {
       throw new Error('Input must be a string')
     }
+    super(string)
     this._string = string
     this._match = string.match(astralRange) || []
   }
@@ -13,6 +14,10 @@ class EmojiCharString {
   }
 
   toString () {
+    return this._string
+  }
+
+  valueOf () {
     return this._string
   }
 
@@ -76,6 +81,26 @@ class EmojiCharString {
 
   slice (begin = 0, end) {
     return this._match.slice(begin, end).join('')
+  }
+
+  split (separator) {
+    if (separator === '') {
+      return this._match.slice(0)
+    }
+    return super.split(separator)
+  }
+
+  charAt (index = 0) {
+    return this._match[index] || ''
+  }
+
+  indexOf (ch, from) {
+    const idx = super.indexOf(ch, from)
+    if (idx === -1) {
+      return -1
+    }
+    const match = this._string.substring(from, idx).match(astralRange) || []
+    return match.length
   }
 }
 
