@@ -244,5 +244,6 @@ describe('EmojiCharString Class indexOf method', () => {
     assert.equal(emojiStr.indexOf('o'), 2)
     assert.equal(emojiStr.indexOf('o', -1), 2)
     assert.equal(emojiStr.indexOf('o', emojiStrLen + 1), -1)
+    assert.equal(emojiStr.indexOf(''), 0)
   })
 })

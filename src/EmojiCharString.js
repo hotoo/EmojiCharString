@@ -5,6 +5,8 @@ class EmojiCharString extends String {
     if (typeof string !== 'string') {
       throw new Error('Input must be a string')
     }
+    // Compiled code includes || logic, test cases can not cover some branch.
+    /* istanbul ignore next */
     super(string)
     this._string = string
     this._match = string.match(astralRange) || []
@@ -87,6 +89,7 @@ class EmojiCharString extends String {
     if (separator === '') {
       return this._match.slice(0)
     }
+    /* istanbul ignore next */
     return super.split(separator)
   }
 
@@ -95,6 +98,7 @@ class EmojiCharString extends String {
   }
 
   indexOf (ch, from) {
+    /* istanbul ignore next */
     const idx = super.indexOf(ch, from)
     if (idx === -1) {
       return -1
